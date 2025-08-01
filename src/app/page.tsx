@@ -9,6 +9,11 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import WhatsAppButton from "@/components/WhatsAppButton";
+import ServiceCard from "@/components/ServiceCard";
+import Nav from "@/components/Nav";
+import Footer from "@/components/Footer";
+import { getFeaturedServices } from "@/data/services";
 import {
   Heart,
   Award,
@@ -22,63 +27,11 @@ import {
 } from "lucide-react";
 
 export default function Home() {
+  const featuredServices = getFeaturedServices();
+
   return (
     <div className="min-h-screen bg-gradient-warm">
-      {/* Navigation */}
-      <nav className="bg-white/80 backdrop-blur-sm border-b border-border sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <div className="flex items-center">
-              <a href="#" className="transition-opacity hover:opacity-80">
-                <Image
-                  src="/logo.png"
-                  alt="Dra. Bárbara Klein"
-                  width={100}
-                  height={60}
-                  className="ph-10 w-auto"
-                />
-              </a>
-            </div>
-            <div className="hidden md:block">
-              <div className="ml-10 flex items-baseline space-x-8">
-                <a
-                  href="#sobre"
-                  className="text-foreground hover:text-primary transition-colors font-medium"
-                >
-                  Sobre
-                </a>
-                <a
-                  href="#procedimentos"
-                  className="text-foreground hover:text-primary transition-colors font-medium"
-                >
-                  Procedimentos
-                </a>
-                <a
-                  href="#depoimentos"
-                  className="text-foreground hover:text-primary transition-colors font-medium"
-                >
-                  Depoimentos
-                </a>
-                <a
-                  href="#clinica"
-                  className="text-foreground hover:text-primary transition-colors font-medium"
-                >
-                  Clínica
-                </a>
-                <a
-                  href="#contato"
-                  className="text-foreground hover:text-primary transition-colors font-medium"
-                >
-                  Contato
-                </a>
-              </div>
-            </div>
-            <Button className="bg-primary hover:bg-primary/90 text-primary-foreground shadow-warm">
-              Agendar Consulta
-            </Button>
-          </div>
-        </div>
-      </nav>
+      <Nav />
 
       {/* Hero Section */}
       <section className="relative py-12 overflow-hidden">
@@ -97,19 +50,15 @@ export default function Home() {
                 personalizado.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
-                <Button
-                  size="lg"
-                  className="bg-primary hover:bg-primary/90 text-primary-foreground shadow-warm"
-                >
+                <WhatsAppButton className="bg-primary hover:bg-primary/90 text-primary-foreground shadow-warm px-8 py-4 text-lg h-14">
                   Agendar Consulta
-                </Button>
-                <Button
-                  variant="outline"
-                  size="lg"
-                  className="border-primary text-primary hover:bg-primary/5"
+                </WhatsAppButton>
+                <a
+                  href="/servicos/fios-pdo"
+                  className="inline-flex items-center justify-center px-8 py-4 text-lg font-semibold border border-primary text-primary rounded-full hover:bg-primary/5 transition-colors duration-200 h-14"
                 >
-                  Conhecer Procedimentos
-                </Button>
+                  Conhecer Serviços
+                </a>
               </div>
             </div>
             <div className="relative">
@@ -183,12 +132,12 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Procedures Section */}
-      <section id="procedimentos" className="py-20 bg-gradient-peach">
+      {/* Services Section */}
+      <section id="servicos" className="py-20 bg-gradient-peach">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl lg:text-4xl font-serif font-bold text-foreground mb-4">
-              Procedimentos
+              Serviços
             </h2>
             <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
               Tratamentos especializados para realçar sua beleza natural
@@ -196,51 +145,13 @@ export default function Home() {
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {[
-              {
-                title: "Fios de PDO",
-                description:
-                  "Sustentação e colágeno para firmeza e contornos definidos, com efeito lifting imediato.",
-              },
-              {
-                title: "Harmonização Facial",
-                description:
-                  "Cuidar de si não é luxo, é necessidade! Seu corpo, sua mente e sua pele merecem atenção e carinho diariamente.",
-              },
-              {
-                title: "Esvaziadores de Gordura",
-                description:
-                  "Menos volume, mais definição! Reduz gordura localizada sem dor e sem cortes.",
-              },
-              {
-                title: "Scizer",
-                description:
-                  "Gordura localizada nunca mais! Tecnologia avançada para reduzir medidas sem cirurgia.",
-              },
-              {
-                title: "Vzet",
-                description:
-                  "Efeito lifting sem cortes! Combate a flacidez e melhora a textura da pele com tecnologia inovadora.",
-              },
-              {
-                title: "Emptiers",
-                description:
-                  "Remodelação facial sem cortes! Diga adeus ao excesso de volume com efeito natural e harmônico.",
-              },
-            ].map((procedure, index) => (
-              <Card
-                key={index}
-                className="hover:shadow-warm transition-shadow duration-300"
-              >
-                <CardHeader>
-                  <CardTitle className="text-xl">{procedure.title}</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <CardDescription className="text-base leading-relaxed">
-                    {procedure.description}
-                  </CardDescription>
-                </CardContent>
-              </Card>
+            {featuredServices.map((service) => (
+              <ServiceCard
+                key={service.slug}
+                title={service.title}
+                description={service.description}
+                slug={service.slug}
+              />
             ))}
           </div>
         </div>
@@ -471,43 +382,16 @@ export default function Home() {
                   </label>
                   <Textarea placeholder="Como podemos ajudar você?" rows={4} />
                 </div>
-                <Button className="w-full bg-primary hover:bg-primary/90 text-primary-foreground shadow-warm">
+                <WhatsAppButton className="w-full bg-primary hover:bg-primary/90 text-primary-foreground shadow-warm">
                   Enviar Mensagem
-                </Button>
+                </WhatsAppButton>
               </CardContent>
             </Card>
           </div>
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="bg-foreground text-white py-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col md:flex-row justify-between items-center">
-            <div className="mb-4 md:mb-0">
-              <Image
-                src="/logo.png"
-                alt="Dra. Bárbara Klein"
-                width={120}
-                height={40}
-                className="h-10 w-auto brightness-0 invert"
-              />
-              <p className="text-white/70 mt-2">
-                Dermatologia Clínica & Estética
-              </p>
-            </div>
-
-            <div className="text-center md:text-right">
-              <p className="text-white/70 text-sm">
-                © 2024 Dra. Bárbara Klein. Todos os direitos reservados.
-              </p>
-              <p className="text-white/70 text-sm mt-1">
-                CRM: 123456 | Especialista em Dermatologia
-              </p>
-            </div>
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }
