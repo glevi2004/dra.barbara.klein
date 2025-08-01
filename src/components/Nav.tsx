@@ -1,5 +1,6 @@
 import Image from "next/image";
 import WhatsAppButton from "@/components/WhatsAppButton";
+import Link from "next/link";
 
 interface NavProps {
   currentPage?: "home" | "blog" | "service";
@@ -11,7 +12,7 @@ export default function Nav({ currentPage = "home" }: NavProps) {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           <div className="flex items-center">
-            <a href="/" className="transition-opacity hover:opacity-80">
+            <Link href="/" className="transition-opacity hover:opacity-80">
               <Image
                 src="/logo.png"
                 alt="Dra. Bárbara Klein"
@@ -19,23 +20,23 @@ export default function Nav({ currentPage = "home" }: NavProps) {
                 height={80}
                 className="h-12 w-auto"
               />
-            </a>
+            </Link>
           </div>
           <div className="hidden md:block">
             <div className="ml-10 flex items-baseline space-x-8">
-              <a
+              <Link
                 href="/#sobre"
                 className="text-foreground hover:text-primary transition-colors font-medium"
               >
                 Sobre
-              </a>
-              <a
+              </Link>
+              <Link
                 href="/#servicos"
                 className="text-foreground hover:text-primary transition-colors font-medium"
               >
                 Serviços
-              </a>
-              <a
+              </Link>
+              <Link
                 href="/blog"
                 className={`transition-colors font-medium ${
                   currentPage === "blog"
@@ -44,25 +45,25 @@ export default function Nav({ currentPage = "home" }: NavProps) {
                 }`}
               >
                 Blog
-              </a>
-              <a
+              </Link>
+              <Link
                 href="/#depoimentos"
                 className="text-foreground hover:text-primary transition-colors font-medium"
               >
                 Depoimentos
-              </a>
-              <a
+              </Link>
+              <Link
                 href="/#clinica"
                 className="text-foreground hover:text-primary transition-colors font-medium"
               >
                 Clínica
-              </a>
-              <a
+              </Link>
+              <Link
                 href="/#contato"
                 className="text-foreground hover:text-primary transition-colors font-medium"
               >
                 Contato
-              </a>
+              </Link>
             </div>
           </div>
           <WhatsAppButton className="bg-primary hover:bg-primary/90 text-primary-foreground shadow-warm">

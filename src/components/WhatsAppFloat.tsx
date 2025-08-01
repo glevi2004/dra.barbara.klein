@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { openWhatsApp } from "@/lib/whatsapp";
 
 export default function WhatsAppFloat() {

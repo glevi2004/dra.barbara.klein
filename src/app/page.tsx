@@ -1,5 +1,4 @@
 import Image from "next/image";
-import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -25,6 +24,7 @@ import {
   Clock,
   Star,
 } from "lucide-react";
+import Link from "next/link";
 
 export default function Home() {
   const featuredServices = getFeaturedServices();
@@ -53,12 +53,12 @@ export default function Home() {
                 <WhatsAppButton className="bg-primary hover:bg-primary/90 text-primary-foreground shadow-warm px-8 py-4 text-lg h-14">
                   Agendar Consulta
                 </WhatsAppButton>
-                <a
+                <Link
                   href="/servicos/fios-pdo"
                   className="inline-flex items-center justify-center px-8 py-4 text-lg font-semibold border border-primary text-primary rounded-full hover:bg-primary/5 transition-colors duration-200 h-14"
                 >
                   Conhecer Serviços
-                </a>
+                </Link>
               </div>
             </div>
             <div className="relative">

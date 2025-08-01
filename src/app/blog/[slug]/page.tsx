@@ -1,16 +1,16 @@
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
-import Image from "next/image";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import WhatsAppButton from "@/components/WhatsAppButton";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import { getBlogPostBySlug, getRelatedPosts, blogPosts } from "@/data/blog";
+import Link from "next/link";
 
 interface BlogPostPageProps {
-  params: {
+  params: Promise<{
     slug: string;
-  };
+  }>;
 }
 
 export async function generateStaticParams() {
@@ -22,7 +22,8 @@ export async function generateStaticParams() {
 export async function generateMetadata({
   params,
 }: BlogPostPageProps): Promise<Metadata> {
-  const post = getBlogPostBySlug(params.slug);
+  const { slug } = await params;
+  const post = getBlogPostBySlug(slug);
 
   if (!post) {
     return {
@@ -43,8 +44,9 @@ export async function generateMetadata({
   };
 }
 
-export default function BlogPostPage({ params }: BlogPostPageProps) {
-  const post = getBlogPostBySlug(params.slug);
+export default async function BlogPostPage({ params }: BlogPostPageProps) {
+  const { slug } = await params;
+  const post = getBlogPostBySlug(slug);
 
   if (!post) {
     notFound();
@@ -60,13 +62,13 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
       <section className="py-6 bg-slate-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center space-x-2 text-sm text-muted-foreground">
-            <a href="/" className="hover:text-primary transition-colors">
+            <Link href="/" className="hover:text-primary transition-colors">
               Início
-            </a>
+            </Link>
             <span>/</span>
-            <a href="/blog" className="hover:text-primary transition-colors">
+            <Link href="/blog" className="hover:text-primary transition-colors">
               Blog
-            </a>
+            </Link>
             <span>/</span>
             <span className="text-foreground">{post.title}</span>
           </div>
@@ -263,12 +265,12 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
                         {relatedPost.category}
                       </div>
                       <h3 className="text-xl font-serif font-bold text-foreground mb-3 line-clamp-2">
-                        <a
+                        <Link
                           href={`/blog/${relatedPost.slug}`}
                           className="hover:text-primary transition-colors duration-200"
                         >
                           {relatedPost.title}
-                        </a>
+                        </Link>
                       </h3>
                       <p className="text-muted-foreground text-sm mb-4 line-clamp-3">
                         {relatedPost.excerpt}
@@ -309,12 +311,12 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
               >
                 Agendar Consulta
               </WhatsAppButton>
-              <a
+              <Link
                 href="/blog"
                 className="inline-flex items-center justify-center px-8 py-4 text-lg font-semibold bg-white/10 border border-white/30 rounded-full hover:bg-white/20 transition-colors duration-200 h-14"
               >
                 Ler Mais Artigos
-              </a>
+              </Link>
             </div>
           </div>
         </div>

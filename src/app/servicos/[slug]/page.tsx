@@ -1,14 +1,6 @@
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
-import Image from "next/image";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import ServiceCard from "@/components/ServiceCard";
 import WhatsAppButton from "@/components/WhatsAppButton";
 import Nav from "@/components/Nav";
@@ -18,11 +10,12 @@ import {
   getRelatedServices,
   services,
 } from "@/data/services";
+import Link from "next/link";
 
 interface ServicePageProps {
-  params: {
+  params: Promise<{
     slug: string;
-  };
+  }>;
 }
 
 export async function generateStaticParams() {
@@ -34,7 +27,8 @@ export async function generateStaticParams() {
 export async function generateMetadata({
   params,
 }: ServicePageProps): Promise<Metadata> {
-  const service = getServiceBySlug(params.slug);
+  const { slug } = await params;
+  const service = getServiceBySlug(slug);
 
   if (!service) {
     return {
@@ -53,8 +47,9 @@ export async function generateMetadata({
   };
 }
 
-export default function ServicePage({ params }: ServicePageProps) {
-  const service = getServiceBySlug(params.slug);
+export default async function ServicePage({ params }: ServicePageProps) {
+  const { slug } = await params;
+  const service = getServiceBySlug(slug);
 
   if (!service) {
     notFound();
@@ -70,16 +65,16 @@ export default function ServicePage({ params }: ServicePageProps) {
       <section className="py-6 bg-slate-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center space-x-2 text-sm text-muted-foreground">
-            <a href="/" className="hover:text-primary transition-colors">
+            <Link href="/" className="hover:text-primary transition-colors">
               Início
-            </a>
+            </Link>
             <span>/</span>
-            <a
+            <Link
               href="/#servicos"
               className="hover:text-primary transition-colors"
             >
               Serviços
-            </a>
+            </Link>
             <span>/</span>
             <span className="text-foreground">{service.title}</span>
           </div>
@@ -364,12 +359,12 @@ export default function ServicePage({ params }: ServicePageProps) {
               >
                 Agendar Consulta
               </WhatsAppButton>
-              <a
+              <Link
                 href="/#servicos"
                 className="inline-flex items-center justify-center px-8 py-4 text-lg font-semibold bg-white/10 border border-white/30 rounded-full hover:bg-white/20 transition-colors duration-200 h-14"
               >
                 Ver Todos os Serviços
-              </a>
+              </Link>
             </div>
           </div>
         </div>
