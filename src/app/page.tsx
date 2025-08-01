@@ -290,7 +290,7 @@ export default function Home() {
                     ))}
                   </div>
                   <p className="text-muted-foreground mb-4 italic leading-relaxed">
-                    "{testimonial.text}"
+                    &ldquo;{testimonial.text}&rdquo;
                   </p>
                   <p className="font-semibold text-foreground">
                     {testimonial.name}
