@@ -84,7 +84,7 @@ export default function Home() {
       <section className="relative py-12 overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div className="max-w-2xl">
+            <div className="max-w-2xl py-20 sm:py-0">
               <h1 className="text-4xl lg:text-6xl font-serif font-bold text-foreground mb-6 text-shadow-sm">
                 Dra. Bárbara Klein
               </h1>
